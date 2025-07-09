@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech for Girls Registration</title>
+
+    <!-- Bootstrap 4 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        padding: 40px;
+        width: 100%;
+        max-width: 550px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .form-container:hover {
+        transform: scale(1.01);
+      }
+
+      h4 {
+        text-align: center;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 30px;
+      }
+
+      .form-group label {
+        color: #f0f0f0;
+        font-weight: 500;
+      }
+
+      .form-control {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 15px;
+        transition: all 0.2s ease;
+      }
+
+      .form-control::placeholder {
+        color: #ddd;
+      }
+
+      .form-control:focus {
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        outline: none;
+        border: 1px solid #fff;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      #shareBtn {
+        background: linear-gradient(135deg, #00bfa6, #5ea4ff);
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        width: 100%;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      #shareBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(94, 164, 255, 0.4);
+      }
+
+      #clickCounter {
+        text-align: center;
+        color: #eee;
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        border: none;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #6b21c5, #3a00b0);
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+      }
+
+      #finalMessage {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 500;
+        color: #d4edda;
+      }
+
+      .form-control-file {
+        color: #fff;
+        margin-top: 6px;
+      }
+
+      label[for="media"] {
+        color: #e6e6e6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="form-container">
+      <h4>🚀 Join the Tech for Girls Community</h4>
+      <form id="submit-to-google-sheet">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input class="form-control" type="text" name="name" id="name" placeholder="Your name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" type="email" name="email" id="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="contact_number">Contact Number</label>
+          <input class="form-control" type="text" name="contact_number" id="contact_number" placeholder="contact number" required />
+        </div>
+
+        <div class="form-group">
+          <label for="college">College</label>
+          <input class="form-control" type="text" name="college" id="college" placeholder="Your College Name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="media">Upload Profile Picture</label>
+          <input class="form-control-file" type="file" name="media" id="media" />
+        </div>
+
+        <button type="button" id="shareBtn">📲 Share on WhatsApp</button>
+        <p id="clickCounter">Click count: 0/5</p>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <p id="finalMessage"></p>
+      </form>
+    </div>
+
+    <!-- JavaScript section -->
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbz2MfzD12j-Df-0aoEUd46fFb681bBbR7Ms1_NCDNYHMgEWkOB5U6B97cRZ6LO-puQy6w/exec";
+      const form = document.forms["submit-to-google-sheet"];
+      const fileInput = document.getElementById("media");
+      const shareBtn = document.getElementById("shareBtn");
+      const clickCounter = document.getElementById("clickCounter");
+      const finalMessage = document.getElementById("finalMessage");
+      let count = 0;
+
+      clickCounter.textContent = `Click count: ${count}/5`;
+      if (count >= 5) {
+        clickCounter.textContent = "Sharing complete. Please continue.";
+      }
+
+      shareBtn.addEventListener("click", () => {
+        if (count < 5) {
+          count++;
+          clickCounter.textContent = `Click count: ${count}/5`;
+          const message = "Hey Buddy, Join Tech For Girls Community";
+          const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+          window.open(whatsappURL, "_blank");
+
+          if (count === 5) {
+            shareBtn.disabled = true;
+            clickCounter.textContent = "Sharing complete. Please continue.";
+          }
+        }
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const fileInput = document.getElementById("media");
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const reader = new FileReader();
+          if (file.size > 1024 * 1024 * 2) {
+            swal("Error", "File size should be less than 2MB.", "error");
+            return;
+          }
+          reader.onload = async function () {
+            formData.append("media", reader.result.split(",")[1]);
+            await submitForm(formData);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          await submitForm(formData);
+        }
+      });
+
+      async function submitForm(formData) {
+        const submitButton = document.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.innerText = "Loading...";
+        finalMessage.textContent = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+        if (count < 5) {
+          alert("Please complete WhatsApp sharing first (5/5 clicks).");
+          return;
+        }
+        fetch(scriptURL, { method: "POST", body: formData })
+          .then((response) => {
+            swal("Done", "Submitted Successfully.", "success");
+            form.reset();
+          })
+          .catch((error) => {
+            swal("Error", "Something went wrong. Please try again!", "error");
+          })
+          .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerText = "Submit";
+          });
+      }
+    </script>
+  </body>
+</html>
