@@ -1,5 +1,5 @@
 var sheetName = 'final'
-var uploadFolderID = '1_JJRD65kbKiwuJsA8OkAkX-Vkp4lUDK3'  // Replace with your Drive folder ID
+var uploadFolderID = '------------------------'  // Replace with your Drive folder ID
 var scriptProp = PropertiesService.getScriptProperties()
 
 function intialSetup () {
